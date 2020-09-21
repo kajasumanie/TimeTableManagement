@@ -15,6 +15,8 @@ namespace TimeTableManagement.Models
         public int LeaveOnMonday { get; set; }
         public int LeaveOnWednesday { get; set; }
         public int LeaveOnFriday { get; set; }
-        public string SubstituteTeacher { get; set; }
+        public string SubstituteTeacherOnMonday { get; set; }
+        public string SubstituteTeacherOnWednesday { get; set; }
+        public string SubstituteTeacherOnFriday { get; set; }
     }
 }

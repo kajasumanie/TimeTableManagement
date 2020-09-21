@@ -3,9 +3,9 @@
 }
 
 @*<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>*@
+        <h1 class="display-4">Welcome</h1>
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    </div>*@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -267,6 +267,7 @@
                         </td>
                         <td>
                             <span class="math_cls bg-sky padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Math</span>
+                            <span id="eng_sub1" class=" bg-primary padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13" style="display:none;">English Teacher Substitute</span>
                             <span class="math_leave_wed_cls bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13" style="display:none;">Leave</span>
                             <span class="math_avalableslot_wed_cls bg-orange padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13" style="display:none;">Available slot</span>
                             <div class="math_cls margin-10px-top font-size14">12:00-1:00</div>
@@ -289,12 +290,14 @@
                         </td>
                         <td>
                             <span class="math_cls bg-sky padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Math</span>
+                            @*<span class="math_leave_wed_cls bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13" style="display:none;">Leave</span>*@
                             <span class="math_leave_wed_cls bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13" style="display:none;">Leave</span>
                             <span class="math_avalableslot_wed_cls bg-orange padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13" style="display:none;">Available slot</span>
                             <div class="math_cls margin-10px-top font-size14">12:00-1:00</div>
                         </td>
                         <td>
                             <span class="english_cls bg-yellow padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">English</span>
+                            <span id="sci_sub1" class=" bg-primary padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13" style="display:none;">Science Teacher Substitute</span>
                             <span class="english_leave_fri_cls bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13" style="display:none;">Leave</span>
                             <span class="english_avalableslot_fri_cls bg-orange padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13" style="display:none;">Available slot</span>
                             <div class="english_cls margin-10px-top font-size14">1:00-2:00</div>
@@ -325,7 +328,7 @@
             //if (txt == "Student")
             //    $("#tableviewID").show();
 
-            if (txt != "Sectional head and principal") 
+            if (txt != "Sectional head and principal")
                 $("#tableviewID").show();
             else
                 $("#tableviewID").hide();
@@ -368,7 +371,7 @@
                 });
             }
 
-            //science_cls english_cls math_cls 
+            //science_cls english_cls math_cls
 
             getUserDetails();
 
@@ -384,7 +387,7 @@
             var isWednesday = "0";
             var isFriday = "0";
 
-            if ($("#Mon_checkbox").prop("checked") == true) 
+            if ($("#Mon_checkbox").prop("checked") == true)
                 isMonday = 1;
             else if ($("#Mon_checkbox").prop("checked") == false)
                 isMonday = 0;
@@ -442,7 +445,7 @@
             $(".science_leave_fri_cls").hide();
 
             if (role != "Student") {
-               details(role);
+                details(role);
             }
             else if (role == "Student") {
                 details("English Teacher");
@@ -522,6 +525,9 @@
             $(".science_avalableslot_wed_cls").hide();
             $(".science_avalableslot_fri_cls").hide();
 
+            $("#eng_sub1").hide();
+            $("#sci_sub1").hide();
+
             //english_avalableslot_fri_cls
             var role = $("#dropdownMenuButton").text();
 
@@ -552,7 +558,9 @@
             var LeaveOnMonday = "";
             var LeaveOnWednesday = "";
             var LeaveOnFriday = "";
-            var SubstituteTeacher = "";
+            var SubstituteTeacherOnMonday = "";
+            var SubstituteTeacherOnWednesday = "";
+            var SubstituteTeacherOnFriday = "";
             var count = 0;
 
             $.ajax({
@@ -577,9 +585,13 @@
                             else if (count == 3)
                                 LeaveOnFriday = value;
                             else if (count == 4)
-                                SubstituteTeacher = value;
-                           // alert(count)
-                           
+                                SubstituteTeacherOnMonday = value;
+                            else if (count == 5)
+                                SubstituteTeacherOnWednesday = value;
+                            else if (count == 6)
+                                SubstituteTeacherOnFriday = value;
+                            // alert(count)
+
                             count++;
                         });
                         //alert(Role + " " + LeaveOnMonday + " " + LeaveOnWednesday + " " + LeaveOnFriday + " " + SubstituteTeacher)
@@ -591,42 +603,63 @@
             });
             //alert(Role + " " + LeaveOnMonday + " " + LeaveOnWednesday + " " + LeaveOnFriday + " " + SubstituteTeacher)
 
-            if (SubstituteTeacher == "" || SubstituteTeacher == null || SubstituteTeacher == "null")
-                SubstituteTeacher = "Available slot";
+            if (SubstituteTeacherOnMonday == "" || SubstituteTeacherOnMonday == null || SubstituteTeacherOnMonday == "null")
+                SubstituteTeacherOnMonday = "Available slot";
             else
-                SubstituteTeacher = SubstituteTeacher + " " + "Substitute";
+                SubstituteTeacherOnMonday = SubstituteTeacherOnMonday + " " + "Substitute";
+
+            if (SubstituteTeacherOnWednesday == "" || SubstituteTeacherOnWednesday == null || SubstituteTeacherOnWednesday == "null")
+                SubstituteTeacherOnWednesday = "Available slot";
+            else
+                SubstituteTeacherOnWednesday = SubstituteTeacherOnWednesday + " " + "Substitute";
+
+            if (SubstituteTeacherOnFriday == "" || SubstituteTeacherOnFriday == null || SubstituteTeacherOnFriday == "null")
+                SubstituteTeacherOnFriday = "Available slot";
+            else
+                SubstituteTeacherOnFriday = SubstituteTeacherOnFriday + " " + "Substitute";
 
             if (LeaveOnMonday == 1) {
                 //$("#Mon_checkbox").prop("checked", true);
                 //alert(1)
-                if (Role == "English Teacher")
-                    $(".english_avalableslot_mon_cls").text(SubstituteTeacher).show();
+
+                //eng_sub1
+                if (Role == "English Teacher") {
+                    $(".english_avalableslot_mon_cls").text(SubstituteTeacherOnMonday).show();
+
+                    if (SubstituteTeacherOnMonday == "Math Teacher Substitute")
+                        $("#eng_sub1").show();
+                }
                 else if (Role == "Math Teacher")
-                    $(".math_avalableslot_mon_cls").text(SubstituteTeacher).show();
+                    $(".math_avalableslot_mon_cls").text(SubstituteTeacherOnMonday).show();
                 else if (Role == "Science Teacher")
-                    $(".science_avalableslot_mon_cls").text(SubstituteTeacher).show();
+                    $(".science_avalableslot_mon_cls").text(SubstituteTeacherOnMonday).show();
             }
             if (LeaveOnWednesday == 1) {
                 //$("#Wed_checkbox").prop("checked", true);
 
                 if (Role == "English Teacher")
-                    $(".english_avalableslot_wed_cls").text(SubstituteTeacher).show();
+                    $(".english_avalableslot_wed_cls").text(SubstituteTeacherOnWednesday).show();
                 else if (Role == "Math Teacher")
-                    $(".math_avalableslot_wed_cls").text(SubstituteTeacher).show();
-                else if (Role == "Science Teacher")
-                    $(".science_avalableslot_wed_cls").text(SubstituteTeacher).show();
+                    $(".math_avalableslot_wed_cls").text(SubstituteTeacherOnWednesday).show();
+                else if (Role == "Science Teacher") {
+                    $(".science_avalableslot_wed_cls").text(SubstituteTeacherOnWednesday).show();
+                    if (SubstituteTeacherOnWednesday == "English Teacher Substitute")
+                        $("#sci_sub1").show();
+                }
+
             }
             if (LeaveOnFriday == 1) {
                 // $("#Fri_checkbox").prop("checked", true);
 
                 if (Role == "English Teacher")
-                    $(".english_avalableslot_fri_cls").text(SubstituteTeacher).show();
+                    $(".english_avalableslot_fri_cls").text(SubstituteTeacherOnFriday).show();
                 else if (Role == "Math Teacher")
-                    $(".math_avalableslot_fri_cls").text(SubstituteTeacher).show();
+                    $(".math_avalableslot_fri_cls").text(SubstituteTeacherOnFriday).show();
                 else if (Role == "Science Teacher")
-                    $(".science_avalableslot_fri_cls").text(SubstituteTeacher).show();
+                    $(".science_avalableslot_fri_cls").text(SubstituteTeacherOnFriday).show();
             }
         }
+            //
     </script>
 </body>
 </html>

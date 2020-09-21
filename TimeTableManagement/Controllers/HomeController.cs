@@ -42,7 +42,7 @@ namespace TimeTableManagement.Controllers
         [HttpPost]
         public JsonResult SaveLeave(string role, int isMonday, int isWednesday, int isFriday)
         {
-            if(role == "Student")
+            if (role == "Student")
                 return Json("");
 
             // check if exist
@@ -99,73 +99,74 @@ namespace TimeTableManagement.Controllers
 
             if (role == "English Teacher")
             {
-                if (user.LeaveOnMonday == 1) { 
-                    if(checkIfTeacherIsNotYetOccupied("Math Teacher"))
-                        user.SubstituteTeacher = "Math Teacher";
-                    else if (checkIfTeacherIsNotYetOccupied("Science Teacher"))
-                        user.SubstituteTeacher = "Science Teacher";
+                if (user.LeaveOnMonday == 1)
+                {
+                    if (checkIfTeacherIsNotYetOccupied("Math Teacher", "mon"))
+                        user.SubstituteTeacherOnMonday = "Math Teacher";
+                    else if (checkIfTeacherIsNotYetOccupied("Science Teacher", "mon"))
+                        user.SubstituteTeacherOnMonday = "Science Teacher";
                 }
                 else if (user.LeaveOnWednesday == 1)
                 {
-                    if (checkIfTeacherIsNotYetOccupied("Science Teacher"))
-                        user.SubstituteTeacher = "Science Teacher";
-                    else if (checkIfTeacherIsNotYetOccupied("Math Teacher"))
-                        user.SubstituteTeacher = "Math Teacher";
+                    if (checkIfTeacherIsNotYetOccupied("Science Teacher", "wed"))
+                        user.SubstituteTeacherOnWednesday = "Science Teacher";
+                    else if (checkIfTeacherIsNotYetOccupied("Math Teacher", "wed"))
+                        user.SubstituteTeacherOnWednesday = "Math Teacher";
                 }
                 else if (user.LeaveOnFriday == 1)
                 {
-                    if (checkIfTeacherIsNotYetOccupied(role))
-                        user.SubstituteTeacher = "Math Teacher";
-                    else if (checkIfTeacherIsNotYetOccupied("Science Teacher"))
-                        user.SubstituteTeacher = "Science Teacher";
+                    if (checkIfTeacherIsNotYetOccupied("Math Teacher", "fri"))
+                        user.SubstituteTeacherOnFriday = "Math Teacher";
+                    else if (checkIfTeacherIsNotYetOccupied("Science Teacher", "fri"))
+                        user.SubstituteTeacherOnFriday = "Science Teacher";
                 }
             }
             else if (role == "Math Teacher")
             {
                 if (user.LeaveOnMonday == 1)
                 {
-                    if (checkIfTeacherIsNotYetOccupied("Science Teacher"))
-                        user.SubstituteTeacher = "Science Teacher";
-                    else if (checkIfTeacherIsNotYetOccupied("English Teacher"))
-                        user.SubstituteTeacher = "English Teacher";
+                    if (checkIfTeacherIsNotYetOccupied("Science Teacher", "mon"))
+                        user.SubstituteTeacherOnMonday = "Science Teacher";
+                    else if (checkIfTeacherIsNotYetOccupied("English Teacher", "mon"))
+                        user.SubstituteTeacherOnMonday = "English Teacher";
                 }
                 else if (user.LeaveOnWednesday == 1)
                 {
-                    if (checkIfTeacherIsNotYetOccupied("English Teacher"))
-                        user.SubstituteTeacher = "English Teacher";
-                    else if (checkIfTeacherIsNotYetOccupied("Science Teacher"))
-                        user.SubstituteTeacher = "Science Teacher";
+                    if (checkIfTeacherIsNotYetOccupied("English Teacher", "wed"))
+                        user.SubstituteTeacherOnWednesday = "English Teacher";
+                    else if (checkIfTeacherIsNotYetOccupied("Science Teacher", "wed"))
+                        user.SubstituteTeacherOnWednesday = "Science Teacher";
                 }
                 else if (user.LeaveOnFriday == 1)
                 {
-                    if (checkIfTeacherIsNotYetOccupied("English Teacher"))
-                        user.SubstituteTeacher = "English Teacher";
-                    else if (checkIfTeacherIsNotYetOccupied("Science Teacher"))
-                        user.SubstituteTeacher = "Science Teacher";
+                    if (checkIfTeacherIsNotYetOccupied("English Teacher", "fri"))
+                        user.SubstituteTeacherOnFriday = "English Teacher";
+                    else if (checkIfTeacherIsNotYetOccupied("Science Teacher", "fri"))
+                        user.SubstituteTeacherOnFriday = "Science Teacher";
                 }
             }
             else if (role == "Science Teacher")
             {
                 if (user.LeaveOnMonday == 1)
                 {
-                    if (checkIfTeacherIsNotYetOccupied("Math Teacher"))
-                        user.SubstituteTeacher = "Math Teacher";
-                    else if (checkIfTeacherIsNotYetOccupied("English Teacher"))
-                        user.SubstituteTeacher = "English Teacher";
+                    if (checkIfTeacherIsNotYetOccupied("Math Teacher", "mon"))
+                        user.SubstituteTeacherOnMonday = "Math Teacher";
+                    else if (checkIfTeacherIsNotYetOccupied("English Teacher", "mon"))
+                        user.SubstituteTeacherOnMonday = "English Teacher";
                 }
                 else if (user.LeaveOnWednesday == 1)
                 {
-                    if (checkIfTeacherIsNotYetOccupied("English Teacher"))
-                        user.SubstituteTeacher = "English Teacher";
-                    else if (checkIfTeacherIsNotYetOccupied("Math Teacher"))
-                        user.SubstituteTeacher = "Math Teacher";
+                    if (checkIfTeacherIsNotYetOccupied("English Teacher", "wed"))
+                        user.SubstituteTeacherOnWednesday = "English Teacher";
+                    else if (checkIfTeacherIsNotYetOccupied("Math Teacher", "wed"))
+                        user.SubstituteTeacherOnWednesday = "Math Teacher";
                 }
                 else if (user.LeaveOnFriday == 1)
                 {
-                    if (checkIfTeacherIsNotYetOccupied("Math Teacher"))
-                        user.SubstituteTeacher = "Math Teacher";
-                    else if (checkIfTeacherIsNotYetOccupied("English Teacher"))
-                        user.SubstituteTeacher = "English Teacher";
+                    if (checkIfTeacherIsNotYetOccupied("Math Teacher", "fri"))
+                        user.SubstituteTeacherOnFriday = "Math Teacher";
+                    else if (checkIfTeacherIsNotYetOccupied("English Teacher", "fri"))
+                        user.SubstituteTeacherOnFriday = "English Teacher";
                 }
             }
 
@@ -176,13 +177,22 @@ namespace TimeTableManagement.Controllers
         }
 
         // this function only check if the teacher is no yet assign by another
-        public bool checkIfTeacherIsNotYetOccupied(string role)
+        public bool checkIfTeacherIsNotYetOccupied(string role, string day)
         {
             bool ret = false;
 
             var user = _context.userTbl.Where(x => x.Role == role).SingleOrDefault();
 
-            if (user == null || user.SubstituteTeacher == "" || user.SubstituteTeacher == null)
+            if (user == null)
+                return true;
+
+            if (day == "mon" && user.SubstituteTeacherOnMonday == "" || user.SubstituteTeacherOnMonday == null)
+                return true;
+            else
+            if (day == "wed" && user.SubstituteTeacherOnWednesday == "" || user.SubstituteTeacherOnWednesday == null)
+                return true;
+            else
+            if (day == "fri" && user.SubstituteTeacherOnFriday == "" || user.SubstituteTeacherOnFriday == null)
                 return true;
 
             return ret;
@@ -199,7 +209,7 @@ namespace TimeTableManagement.Controllers
             //check if exist
             UserModel users = _context.userTbl.Where(x => x.Role == role).SingleOrDefault();
 
-            if(users == null)
+            if (users == null)
                 return Json("");
 
             //var userss = _context.userTbl.Where(x => x.Role == role).ToList();
@@ -211,10 +221,12 @@ namespace TimeTableManagement.Controllers
         {
             string ret = "clean";
             var user = _context.userTbl.Where(x => x.Role == "English Teacher").SingleOrDefault();
-            if(user != null)
+            if (user != null)
             {
                 if (user.LeaveOnMonday == 1 || user.LeaveOnWednesday == 1 || user.LeaveOnFriday == 1
-                    && (user.SubstituteTeacher == "" || user.SubstituteTeacher == null))
+                    && (user.SubstituteTeacherOnMonday == "" || user.SubstituteTeacherOnMonday == null)
+                     && (user.SubstituteTeacherOnWednesday == "" || user.SubstituteTeacherOnWednesday == null)
+                      && (user.SubstituteTeacherOnFriday == "" || user.SubstituteTeacherOnFriday == null))
                     ret = "have";
             }
 
@@ -222,7 +234,9 @@ namespace TimeTableManagement.Controllers
             if (user != null)
             {
                 if (user.LeaveOnMonday == 1 || user.LeaveOnWednesday == 1 || user.LeaveOnFriday == 1
-                    && (user.SubstituteTeacher == "" || user.SubstituteTeacher == null))
+                    && (user.SubstituteTeacherOnMonday == "" || user.SubstituteTeacherOnMonday == null)
+                     && (user.SubstituteTeacherOnWednesday == "" || user.SubstituteTeacherOnWednesday == null)
+                      && (user.SubstituteTeacherOnFriday == "" || user.SubstituteTeacherOnFriday == null))
                     ret = "have";
             }
 
@@ -230,7 +244,9 @@ namespace TimeTableManagement.Controllers
             if (user != null)
             {
                 if (user.LeaveOnMonday == 1 || user.LeaveOnWednesday == 1 || user.LeaveOnFriday == 1
-                    && (user.SubstituteTeacher == "" || user.SubstituteTeacher == null))
+                 && (user.SubstituteTeacherOnMonday == "" || user.SubstituteTeacherOnMonday == null)
+                     && (user.SubstituteTeacherOnWednesday == "" || user.SubstituteTeacherOnWednesday == null)
+                      && (user.SubstituteTeacherOnFriday == "" || user.SubstituteTeacherOnFriday == null))
                     ret = "have";
             }
 
